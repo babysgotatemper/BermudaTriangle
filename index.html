@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔺 Бермудський трикутник — найзагадковіше місце на Землі!</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --deep-blue: #0a2540;
+    --ocean: #1a4d7a;
+    --teal: #2d8fb3;
+    --light-blue: #7cc4dd;
+    --sand: #f5e6c8;
+    --coral: #ff6b6b;
+    --sunshine: #ffd93d;
+    --white: #ffffff;
+  }
+
+  body {
+    font-family: 'Comic Sans MS', 'Trebuchet MS', sans-serif;
+    background: linear-gradient(180deg, #0a2540 0%, #1a4d7a 30%, #2d8fb3 70%, #7cc4dd 100%);
+    color: #fff;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at center, #1a4d7a 0%, #0a2540 100%);
+  }
+
+  .stars {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(2px 2px at 20% 30%, white, transparent),
+      radial-gradient(2px 2px at 60% 70%, white, transparent),
+      radial-gradient(1px 1px at 50% 50%, white, transparent),
+      radial-gradient(1px 1px at 80% 10%, white, transparent),
+      radial-gradient(2px 2px at 90% 60%, white, transparent),
+      radial-gradient(1px 1px at 33% 80%, white, transparent),
+      radial-gradient(1px 1px at 15% 65%, white, transparent);
+    background-size: 200% 200%;
+    animation: twinkle 8s infinite;
+    opacity: 0.6;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.9; }
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    margin-bottom: 20px;
+    text-shadow: 4px 4px 0 var(--coral), 8px 8px 30px rgba(0,0,0,0.5);
+    animation: float 3s ease-in-out infinite;
+    z-index: 2;
+    line-height: 1.1;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .hero p {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    max-width: 800px;
+    padding: 0 20px;
+    z-index: 2;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+  }
+
+  .triangle-icon {
+    font-size: clamp(4rem, 12vw, 8rem);
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 30px var(--sunshine));
+    animation: spin 20s linear infinite;
+    z-index: 2;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .scroll-down {
+    position: absolute;
+    bottom: 30px;
+    font-size: 2rem;
+    animation: bounce 2s infinite;
+    z-index: 2;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(15px); }
+  }
+
+  /* ===== SECTION SHARED ===== */
+  section {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    text-align: center;
+    margin-bottom: 50px;
+    color: var(--sunshine);
+    text-shadow: 3px 3px 0 var(--ocean);
+  }
+
+  /* ===== WHAT IS IT ===== */
+  .what-card {
+    background: rgba(255,255,255,0.95);
+    color: var(--deep-blue);
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    font-size: 1.2rem;
+    line-height: 1.8;
+  }
+
+  .what-card p { margin-bottom: 20px; }
+
+  .fun-fact {
+    background: linear-gradient(135deg, var(--sunshine), var(--coral));
+    padding: 25px;
+    border-radius: 20px;
+    margin-top: 25px;
+    color: var(--deep-blue);
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: 4px dashed var(--white);
+  }
+
+  /* ===== MAP ===== */
+  #map {
+    height: 500px;
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    border: 6px solid var(--sunshine);
+  }
+
+  .map-info {
+    background: rgba(255,255,255,0.95);
+    color: var(--deep-blue);
+    border-radius: 20px;
+    padding: 25px;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  .points-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .point {
+    background: linear-gradient(135deg, var(--teal), var(--ocean));
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    font-weight: bold;
+  }
+
+  .point span { font-size: 2rem; display: block; margin-bottom: 5px; }
+
+  /* ===== HISTORY ===== */
+  .timeline {
+    position: relative;
+    padding: 20px 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--sunshine);
+    transform: translateX(-50%);
+  }
+
+  .event {
+    width: 45%;
+    background: rgba(255,255,255,0.95);
+    color: var(--deep-blue);
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+
+  .event:nth-child(odd) { margin-left: 0; }
+  .event:nth-child(even) { margin-left: 55%; }
+
+  .event::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--coral);
+    border-radius: 50%;
+    border: 4px solid var(--sunshine);
+    top: 25px;
+  }
+
+  .event:nth-child(odd)::before { right: -65px; }
+  .event:nth-child(even)::before { left: -65px; }
+
+  .event h3 {
+    color: var(--coral);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .event .year {
+    background: var(--sunshine);
+    color: var(--deep-blue);
+    padding: 5px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  /* ===== NAME ORIGIN ===== */
+  .name-card {
+    background: linear-gradient(135deg, var(--coral), #ff9a6c);
+    color: white;
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    font-size: 1.2rem;
+    line-height: 1.8;
+    text-align: center;
+  }
+
+  .name-card .big {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 20px 0;
+    color: var(--sunshine);
+    text-shadow: 2px 2px 0 var(--deep-blue);
+  }
+
+  /* ===== DISAPPEARED ===== */
+  .disappeared-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+  }
+
+  .vessel-card {
+    background: rgba(255,255,255,0.95);
+    color: var(--deep-blue);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    cursor: pointer;
+  }
+
+  .vessel-card:hover {
+    transform: translateY(-10px) rotate(-2deg);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+
+  .vessel-card .emoji {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  .vessel-card h3 {
+    color: var(--coral);
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+
+  .vessel-card .date {
+    background: var(--sunshine);
+    color: var(--deep-blue);
+    padding: 4px 12px;
+    border-radius: 15px;
+    display: inline-block;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  /* ===== THEORIES ===== */
+  .theories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .theory {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    color: white;
+    transition: all 0.3s;
+  }
+
+  .theory:hover {
+    background: rgba(255,255,255,0.25);
+    transform: scale(1.05);
+  }
+
+  .theory .icon {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  .theory h3 {
+    color: var(--sunshine);
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--deep-blue);
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 1.1rem;
+    margin-top: 40px;
+  }
+
+  footer .hearts {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .timeline::before { left: 20px; }
+    .event, .event:nth-child(odd), .event:nth-child(even) {
+      width: calc(100% - 50px);
+      margin-left: 50px;
+    }
+    .event:nth-child(odd)::before,
+    .event:nth-child(even)::before {
+      left: -40px;
+      right: auto;
+    }
+    section { padding: 50px 15px; }
+    .what-card, .name-card { padding: 25px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="stars"></div>
+  <div class="triangle-icon">🔺</div>
+  <h1>Бермудський<br>трикутник</h1>
+  <p>Найзагадковіше місце на Землі, де зникають кораблі та літаки!</p>
+  <div class="scroll-down">⬇️</div>
+</div>
+
+<!-- WHAT IS IT -->
+<section>
+  <h2 class="section-title">🌊 Що це таке?</h2>
+  <div class="what-card">
+    <p>👋 Привіт, юний дослідник! Готовий до пригоди?</p>
+    <p>Бермудський трикутник — це таємнича ділянка <strong>Атлантичного океану</strong>. Уяви собі величезний трикутник на воді — настільки великий, що він більший за цілий штат Техас! 🗺️</p>
+    <p>Це місце знамените тим, що тут вже понад 100 років зникають кораблі ⛵ та літаки ✈️. Вони пропадають без жодного сліду — наче їх з'їв океан!</p>
+    <div class="fun-fact">
+      💡 <strong>Цікавий факт:</strong> Площа Бермудського трикутника — близько 1 мільйон 440 тисяч квадратних кілометрів! Це більше за всю Україну!
+    </div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section>
+  <h2 class="section-title">🗺️ Де він знаходиться?</h2>
+  <div id="map"></div>
+  <div class="map-info">
+    <p>Бермудський трикутник має <strong>три вершини</strong> — як справжній трикутник! 📐</p>
+    <div class="points-list">
+      <div class="point">
+        <span>🏝️</span>
+        Бермудські острови
+      </div>
+      <div class="point">
+        <span>🌴</span>
+        Маямі (Флорида)
+      </div>
+      <div class="point">
+        <span>🏖️</span>
+        Сан-Хуан (Пуерто-Ріко)
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NAME ORIGIN -->
+<section>
+  <h2 class="section-title">📚 Чому така назва?</h2>
+  <div class="name-card">
+    <p>А ти знав, що ця назва з'явилась зовсім нещодавно?</p>
+    <p class="big">У 1964 році! 📰</p>
+    <p>Письменник на ім'я <strong>Вінсент Геддіс</strong> написав статтю в журналі і назвав цю територію «Смертельний Бермудський трикутник».</p>
+    <p>Чому саме «Бермудський»? Бо одна з вершин трикутника — це <strong>Бермудські острови</strong> 🏝️</p>
+    <p>А чому «трикутник»? Бо на карті ця зона має форму трикутника! 🔺</p>
+    <p>До того, як з'явилась ця назва, моряки називали це місце <strong>«Море Диявола»</strong> 😈 або <strong>«Зачароване море»</strong> ✨</p>
+  </div>
+</section>
+
+<!-- DISAPPEARED -->
+<section>
+  <h2 class="section-title">👻 Хто там зник?</h2>
+  <p style="text-align:center; font-size:1.3rem; margin-bottom:30px;">У Бермудському трикутнику зникли понад <strong>70 кораблів і літаків</strong>! Ось найвідоміші історії:</p>
+
+  <div class="disappeared-grid">
+
+    <div class="vessel-card">
+      <span class="emoji">✈️</span>
+      <h3>Рейс 19</h3>
+      <div class="date">📅 5 грудня 1945</div>
+      <p>П'ять військових літаків полетіли на тренування і… зникли! А літак, який вилетів їх шукати, теж пропав! Це найвідоміша таємниця Бермудського трикутника.</p>
+    </div>
+
+    <div class="vessel-card">
+      <span class="emoji">⛵</span>
+      <h3>«Марія Целеста»</h3>
+      <div class="date">📅 1872 рік</div>
+      <p>Корабель знайшли цілим і неушкодженим — але без жодної людини на борту! Куди поділась вся команда? Ніхто не знає досі.</p>
+    </div>
+
+    <div class="vessel-card">
+      <span class="emoji">🚢</span>
+      <h3>«Циклоп»</h3>
+      <div class="date">📅 1918 рік</div>
+      <p>Величезний корабель, який віз вугілля, зник разом з 309 людьми. Він навіть не встиг подати сигнал «SOS»!</p>
+    </div>
+
+    <div class="vessel-card">
+      <span class="emoji">⛵</span>
+      <h3>«Розалі»</h3>
+      <div class="date">📅 1840 рік</div>
+      <p>Французьке судно знайшли пустим — без жодної людини, але цілим. Куди ж поділась команда? Ще одна загадка!</p>
+    </div>
+
+    <div class="vessel-card">
+      <span class="emoji">🛢️</span>
+      <h3>«Marine Sulphur Queen»</h3>
+      <div class="date">📅 1963 рік</div>
+      <p>Великий танкер з 39 моряками зник назавжди. Знайшли лише кілька рятувальних жилетів. А куди подівся корабель — невідомо.</p>
+    </div>
+
+    <div class="vessel-card">
+      <span class="emoji">✈️</span>
+      <h3>Літак C-119</h3>
+      <div class="date">📅 1965 рік</div>
+      <p>Великий військовий літак з 9 людьми на борту пропав у ясну погоду! Дехто навіть жартував, що його забрали інопланетяни 👽</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- THEORIES -->
+<section>
+  <h2 class="section-title">🤔 А чому все це відбувається?</h2>
+  <p style="text-align:center; font-size:1.3rem; margin-bottom:30px;">Вчені та фантазери придумали багато теорій. Ось деякі з них:</p>
+
+  <div class="theories">
+
+    <div class="theory">
+      <span class="icon">🌪️</span>
+      <h3>Сильні шторми</h3>
+      <p>Тут часто бувають урагани і вели́кі хвилі-вбивці. Це найбільш науково підтверджена теорія!</p>
+    </div>
+
+    <div class="theory">
+      <span class="icon">🌊</span>
+      <h3>Гольфстрім</h3>
+      <p>Потужна морська течія! Вона так швидко відносить уламки, що їх ніхто не знаходить.</p>
+    </div>
+
+    <div class="theory">
+      <span class="icon">🧲</span>
+      <h3>Магнітні аномалії</h3>
+      <p>Тут компас може показувати неправильний напрямок! Кораблі і літаки збиваються з шляху.</p>
+    </div>
+
+    <div class="theory">
+      <span class="icon">👽</span>
+      <h3>Інопланетяни</h3>
+      <p>Деякі люди вірять, що тут на дні океану лежить корабель прибульців, який притягує літаки!</p>
+    </div>
+
+    <div class="theory">
+      <span class="icon">🏛️</span>
+      <h3>Атлантида</h3>
+      <p>Є легенда, що під водою лежить стародавнє місто Атлантида, і його магія діє на кораблі!</p>
+    </div>
+
+    <div class="theory">
+      <span class="icon">💨</span>
+      <h3>Газ із дна моря</h3>
+      <p>Зі дна виходить особливий газ (метан) — і він робить воду такою, що кораблі можуть тонути!</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- TRUTH -->
+<section>
+  <h2 class="section-title">🔬 А насправді?</h2>
+  <div class="what-card">
+    <p>Знаєш що? Вчені нещодавно з'ясували, що Бермудський трикутник <strong>не такий вже й небезпечний</strong>! 😮</p>
+    <p>У 2013 році дослідники склали список з 10 найнебезпечніших морських шляхів у світі — і Бермудський трикутник туди <strong>навіть не потрапив</strong>!</p>
+    <p>Більшість зникнень вчені пояснюють <strong>поганою погодою</strong> ⛈️, <strong>сильними течіями</strong> 🌊 та <strong>помилками людей</strong> 🤷.</p>
+    <div class="fun-fact">
+      ✨ <strong>Але все одно!</strong> Бермудський трикутник залишається однією з найцікавіших таємниць нашої планети. Хто знає — може саме ти колись розгадаєш цю загадку? 🕵️
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="hearts">🔺 🌊 ⛵ ✈️ 🏝️</div>
+  <p>Сайт створено з любов'ю до пригод і таємниць</p>
+  <p style="margin-top:10px; opacity:0.7;">© 2026 · Артем досліджує світ</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // Координати трьох вершин Бермудського трикутника
+  const miami = [25.7617, -80.1918];       // Маямі, Флорида
+  const bermuda = [32.3078, -64.7505];     // Бермудські острови
+  const sanJuan = [18.4655, -66.1057];     // Сан-Хуан, Пуерто-Ріко
+
+  // Створюємо карту
+  const map = L.map('map').setView([25.0, -70.0], 4);
+
+  // Додаємо тайли карти
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap',
+    maxZoom: 18
+  }).addTo(map);
+
+  // Малюємо трикутник
+  const triangle = L.polygon([miami, bermuda, sanJuan], {
+    color: '#ff6b6b',
+    weight: 4,
+    fillColor: '#ffd93d',
+    fillOpacity: 0.3,
+    dashArray: '10, 10'
+  }).addTo(map);
+
+  // Додаємо маркери для кожної вершини
+  const miamiIcon = L.divIcon({
+    html: '🌴',
+    className: 'custom-emoji-icon',
+    iconSize: [40, 40]
+  });
+
+  const bermudaIcon = L.divIcon({
+    html: '🏝️',
+    className: 'custom-emoji-icon',
+    iconSize: [40, 40]
+  });
+
+  const sanJuanIcon = L.divIcon({
+    html: '🏖️',
+    className: 'custom-emoji-icon',
+    iconSize: [40, 40]
+  });
+
+  L.marker(miami, {icon: miamiIcon}).addTo(map)
+    .bindPopup('<b>🌴 Маямі</b><br>Штат Флорида, США').openPopup();
+
+  L.marker(bermuda, {icon: bermudaIcon}).addTo(map)
+    .bindPopup('<b>🏝️ Бермудські острови</b><br>Тут все почалось!');
+
+  L.marker(sanJuan, {icon: sanJuanIcon}).addTo(map)
+    .bindPopup('<b>🏖️ Сан-Хуан</b><br>Пуерто-Ріко');
+</script>
+
+<style>
+  .custom-emoji-icon {
+    font-size: 35px;
+    text-align: center;
+    line-height: 40px;
+    text-shadow: 0 0 8px white;
+  }
+  .leaflet-popup-content {
+    font-family: 'Comic Sans MS', sans-serif;
+    font-size: 14px;
+  }
+</style>
+
+</body>
+</html>
