@@ -55,7 +55,7 @@ export const Reality: React.FC = () => {
         </motion.h2>
 
         <motion.article
-          className="p-8 rounded-3xl text-slate-200 leading-relaxed"
+          className="p-10 md:p-12 rounded-3xl text-slate-200 text-center"
           style={{
             background: 'rgba(20, 41, 70, 0.85)',
             backdropFilter: 'blur(12px)',
@@ -65,15 +65,15 @@ export const Reality: React.FC = () => {
           } as React.CSSProperties}
           variants={itemVariants}
         >
-          <p className="mb-6 text-lg font-semibold text-teal-light">
+          <p className="mb-8 text-lg font-semibold text-teal-light leading-relaxed">
             ⚠️ Вчені з'ясували: Бермудський трикутник <strong>не такий небезпечний</strong>, як його малюють!
           </p>
 
-          <p className="mb-4 text-lg">
+          <p className="mb-6 text-lg leading-relaxed">
             У 2013 році дослідники провели глобальне дослідження і з'ясували, що Бермудський трикутник навіть <strong>не входить</strong> до топ-10 найнебезпечніших морських шляхів світу.
           </p>
 
-          <p className="mb-6 text-lg">
+          <p className="mb-8 text-lg leading-relaxed">
             Більшість зникнень можна пояснити звичайними причинами:
           </p>
 

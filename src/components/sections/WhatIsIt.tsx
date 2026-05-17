@@ -44,7 +44,7 @@ export const WhatIsIt: React.FC = () => {
         </motion.h2>
 
         <motion.article
-          className="p-8 rounded-3xl text-slate-200 leading-relaxed"
+          className="p-10 md:p-12 rounded-3xl text-slate-200 text-center"
           style={{
             background: 'rgba(20, 41, 70, 0.85)',
             backdropFilter: 'blur(12px)',
@@ -54,10 +54,10 @@ export const WhatIsIt: React.FC = () => {
           } as React.CSSProperties}
           variants={itemVariants}
         >
-          <p className="mb-4 text-lg">
+          <p className="mb-6 text-lg leading-relaxed">
             Бермудський трикутник — це область Атлантичного океану розміром, більшим за Техас! Його вершини знаходяться у трьох точках: у Маямі (Флорида), на Бермудських островах і в Сан-Хуані (Пуерто-Ріко).
           </p>
-          <p className="mb-6 text-lg">
+          <p className="mb-8 text-lg leading-relaxed">
             На протязі останніх століть у цій ділянці зникло понад 70 кораблів і літаків. Деякі дослідники стверджують, що це найнебезпечніше місце на планеті, але чи це правда?
           </p>
 

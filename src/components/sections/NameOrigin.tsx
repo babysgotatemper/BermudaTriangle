@@ -62,7 +62,7 @@ export const NameOrigin: React.FC = () => {
 
           {/* Story Card */}
           <motion.article
-            className="p-8 rounded-3xl text-slate-200 leading-relaxed"
+            className="p-10 md:p-12 rounded-3xl text-slate-200 text-center"
             style={{
               background: 'rgba(20, 41, 70, 0.85)',
               backdropFilter: 'blur(12px)',
@@ -72,13 +72,13 @@ export const NameOrigin: React.FC = () => {
             } as React.CSSProperties}
             variants={itemVariants}
           >
-            <p className="mb-4 text-lg">
+            <p className="mb-6 text-lg leading-relaxed">
               Назва <strong>"Бермудський трикутник"</strong> придумана американським письменником <strong>Вінсентом Геддісом</strong> у 1964 році.
             </p>
-            <p className="mb-4 text-lg">
+            <p className="mb-8 text-lg leading-relaxed">
               Йому сподобалась історія про зникнення літаків і кораблів, і він назвав цей регіон <strong>"дияволовим морем"</strong> в одній з своїх статей.
             </p>
-            <p className="text-base text-slate-300">
+            <p className="text-base text-slate-300 leading-relaxed">
               <em>Цікаво, що раніше морехідці називали цей район "Морем Диявола" (Sea of the Devil) та "Зачарованим морем" (Enchanted Sea). Але саме назва Геддіса закріпилась в історії!</em>
             </p>
           </motion.article>

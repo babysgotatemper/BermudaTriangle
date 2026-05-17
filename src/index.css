@@ -51,6 +51,7 @@ body {
 /* Scroll-snap sections */
 .snap-section {
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   min-height: 100vh;
   padding: 4rem 1.5rem;
   display: flex;
@@ -80,7 +81,15 @@ body {
 .lead {
   font-size: clamp(1.125rem, 3vw, 1.25rem);
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* Card text styling */
+.snap-section article p {
+  text-align: center;
+  line-height: 1.9;
+  margin-bottom: 1.5rem;
 }
 
 /* Animations */
