@@ -66,9 +66,10 @@ export const NameOrigin: React.FC = () => {
             style={{
               background: 'rgba(20, 41, 70, 0.85)',
               backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
               border: '1px solid rgba(249, 115, 22, 0.3)',
               boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
-            }}
+            } as React.CSSProperties}
             variants={itemVariants}
           >
             <p className="mb-4 text-lg">

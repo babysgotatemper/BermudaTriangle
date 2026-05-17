@@ -59,9 +59,10 @@ export const Reality: React.FC = () => {
           style={{
             background: 'rgba(20, 41, 70, 0.85)',
             backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
             border: '1px solid rgba(94, 234, 212, 0.2)',
             boxShadow: '0 20px 60px rgba(0, 0, 0, 0.4)',
-          }}
+          } as React.CSSProperties}
           variants={itemVariants}
         >
           <p className="mb-6 text-lg font-semibold text-teal-light">
