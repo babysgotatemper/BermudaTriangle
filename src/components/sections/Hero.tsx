@@ -121,7 +121,7 @@ export const Hero: React.FC = () => {
         </motion.h1>
 
         {/* Subtitle */}
-        <motion.p className="lead max-w-2xl mb-8 text-slate-200" variants={itemVariants}>
+        <motion.p className="lead text-center max-w-2xl mx-auto mb-8 text-slate-200" variants={itemVariants}>
           Найзагадковіше місце на Землі де кораблі і літаки зникають без сліду…
         </motion.p>
 
