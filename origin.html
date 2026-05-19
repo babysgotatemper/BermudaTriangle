@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📜 Початковий запит · Бермудський трикутник</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #0a1628;
+  --bg-mid: #1a4d7a;
+  --teal: #14b8a6;
+  --teal-light: #5eead4;
+  --coral: #f97316;
+  --gold: #f59e0b;
+  --gold-light: #fbbf24;
+
+  /* Кольори сувою — старий пергамент */
+  --scroll-light: #f4e4bc;
+  --scroll-mid: #e8d099;
+  --scroll-dark: #c8a96e;
+  --scroll-shadow: #8b6f47;
+  --scroll-roll: #6b4423;
+  --scroll-text: #3d2817;
+  --scroll-ink: #2d1810;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background:
+    radial-gradient(ellipse at top, #1a4d7a 0%, #0a1628 60%, #050d1a 100%);
+  min-height: 100vh;
+  color: white;
+  padding: 2rem 1.5rem;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Зорі на фоні */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 20% 20%, #fbbf24, transparent),
+    radial-gradient(1px 1px at 50% 50%, #fff, transparent),
+    radial-gradient(2px 2px at 80% 30%, #f59e0b, transparent),
+    radial-gradient(1px 1px at 70% 70%, #fff, transparent),
+    radial-gradient(1px 1px at 30% 80%, #fbbf24, transparent),
+    radial-gradient(2px 2px at 90% 90%, #f59e0b, transparent);
+  opacity: 0.4;
+  pointer-events: none;
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+/* ===== HEADER ===== */
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 2;
+}
+
+.page-title {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #5eead4, #f59e0b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+
+.page-subtitle {
+  color: #94a3b8;
+  font-size: 1rem;
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===== СУВІЙ ===== */
+.scroll-wrapper {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1rem 0 4rem;
+  position: relative;
+  z-index: 2;
+  perspective: 2000px;
+  animation: scrollEnter 1s ease-out;
+}
+
+@keyframes scrollEnter {
+  from {
+    opacity: 0;
+    transform: translateY(40px) rotateX(15deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+/* Верхній валик сувою */
+.scroll-roll {
+  height: 38px;
+  background:
+    linear-gradient(180deg,
+      #8b6f47 0%,
+      #6b4423 30%,
+      #4a2f17 50%,
+      #6b4423 70%,
+      #8b6f47 100%);
+  border-radius: 19px;
+  box-shadow:
+    0 0 0 1px #3d2817,
+    0 8px 25px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 220, 180, 0.3),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 3;
+}
+
+/* Текстура дерева на валиках */
+.scroll-roll::before,
+.scroll-roll::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #5d3a1a 0%, #3d2817 50%, #2d1810 100%);
+  box-shadow:
+    inset 0 0 8px rgba(0, 0, 0, 0.7),
+    0 2px 5px rgba(0, 0, 0, 0.4);
+  transform: translateY(-50%);
+}
+
+.scroll-roll::before { left: -8px; }
+.scroll-roll::after { right: -8px; }
+
+/* Кільця на торцях валика */
+.scroll-roll-cap {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4b67a, #8b6f47);
+  box-shadow: 0 0 0 1px #3d2817, inset 0 1px 1px rgba(255,255,255,0.4);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.scroll-roll-cap.left { left: -2px; }
+.scroll-roll-cap.right { right: -2px; }
+
+/* Тіло сувою — пергамент */
+.scroll-body {
+  position: relative;
+  background:
+    /* Плями старості */
+    radial-gradient(ellipse 80px 40px at 15% 20%, rgba(139, 90, 50, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse 60px 30px at 85% 35%, rgba(160, 100, 60, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 100px 50px at 50% 75%, rgba(120, 80, 40, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse 40px 20px at 25% 60%, rgba(180, 130, 70, 0.15) 0%, transparent 50%),
+    /* Основний градієнт пергаменту */
+    linear-gradient(180deg,
+      var(--scroll-dark) 0%,
+      var(--scroll-mid) 5%,
+      var(--scroll-light) 15%,
+      var(--scroll-light) 85%,
+      var(--scroll-mid) 95%,
+      var(--scroll-dark) 100%);
+  padding: 3rem 3rem 3.5rem;
+  box-shadow:
+    inset 0 5px 15px rgba(139, 90, 50, 0.3),
+    inset 0 -5px 15px rgba(139, 90, 50, 0.3),
+    inset 8px 0 20px rgba(180, 140, 80, 0.2),
+    inset -8px 0 20px rgba(180, 140, 80, 0.2),
+    0 0 30px rgba(0, 0, 0, 0.4);
+  position: relative;
+  margin: -8px 12px;
+  border-left: 1px solid rgba(139, 90, 50, 0.3);
+  border-right: 1px solid rgba(139, 90, 50, 0.3);
+}
+
+/* Декоративний контур на пергаменті */
+.scroll-body::before {
+  content: '';
+  position: absolute;
+  inset: 1.25rem;
+  border: 1px solid rgba(139, 90, 50, 0.3);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* Шум/текстура */
+.scroll-body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 10% 30%, rgba(139, 90, 50, 0.08) 0%, transparent 8%),
+    radial-gradient(circle at 70% 60%, rgba(139, 90, 50, 0.06) 0%, transparent 6%),
+    radial-gradient(circle at 40% 85%, rgba(139, 90, 50, 0.08) 0%, transparent 7%);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+}
+
+/* Заголовок сувою */
+.scroll-title {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 700;
+  color: var(--scroll-ink);
+  text-align: center;
+  margin-bottom: 0.5rem;
+  text-shadow: 1px 1px 0 rgba(255, 240, 200, 0.4);
+  letter-spacing: 0.5px;
+}
+
+.scroll-divider {
+  text-align: center;
+  margin: 1rem 0 1.5rem;
+  color: var(--scroll-shadow);
+  font-size: 1.5rem;
+  letter-spacing: 0.5rem;
+  opacity: 0.7;
+}
+
+/* Підзаголовок — дата */
+.scroll-date {
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--scroll-shadow);
+  margin-bottom: 2rem;
+}
+
+/* Текст оригінального запиту */
+.scroll-text {
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  font-size: 1.1rem;
+  line-height: 1.85;
+  color: var(--scroll-text);
+  text-align: justify;
+  position: relative;
+  z-index: 2;
+}
+
+.scroll-text p {
+  margin-bottom: 1rem;
+  text-indent: 2rem;
+}
+
+.scroll-text p:first-letter {
+  font-family: 'Caveat', cursive;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--coral);
+  line-height: 1;
+  float: left;
+  padding: 0.2rem 0.5rem 0 0;
+  text-shadow: 1px 1px 0 rgba(255, 220, 180, 0.5);
+}
+
+/* Дитячий діалог — як "сирий" запит */
+.scroll-text .dialog {
+  background: rgba(245, 158, 11, 0.08);
+  border-left: 3px solid rgba(249, 115, 22, 0.5);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  border-radius: 0 6px 6px 0;
+  text-indent: 0;
+}
+
+.scroll-text .dialog::first-letter {
+  font-size: 1.1rem;
+  font-family: inherit;
+  color: var(--scroll-text);
+  float: none;
+  padding: 0;
+  text-shadow: none;
+  font-weight: inherit;
+}
+
+.scroll-text .dialog strong {
+  color: var(--coral);
+  font-weight: 700;
+  font-style: normal;
+}
+
+.scroll-text em {
+  color: var(--scroll-shadow);
+  font-weight: 600;
+}
+
+/* Підпис */
+.scroll-signature {
+  margin-top: 2rem;
+  text-align: right;
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  color: var(--coral);
+  transform: rotate(-3deg);
+  display: inline-block;
+  float: right;
+}
+
+.scroll-signature-sub {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
+  color: var(--scroll-shadow);
+  font-style: italic;
+  margin-top: 0.25rem;
+  transform: rotate(0);
+}
+
+/* Воскова печатка */
+.wax-seal {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, #ff6b3d 0%, #c0392b 50%, #7d2818 100%);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 2px 4px rgba(255, 200, 150, 0.5),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: rgba(125, 40, 24, 0.9);
+  text-shadow: 1px 1px 0 rgba(255, 200, 150, 0.4);
+  position: absolute;
+  bottom: -1rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(-5deg);
+  z-index: 4;
+  border: 2px solid rgba(125, 40, 24, 0.4);
+}
+
+.wax-seal::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px dashed rgba(125, 40, 24, 0.5);
+  border-radius: 50%;
+}
+
+/* Нижній валик */
+.scroll-roll.bottom {
+  margin-top: -1px;
+}
+
+/* Кнопка повернення */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  background: linear-gradient(135deg, var(--teal) 0%, #0e9488 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 2rem;
+  transition: all 0.3s;
+  box-shadow: 0 8px 20px rgba(20, 184, 166, 0.3);
+}
+
+.back-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(20, 184, 166, 0.5);
+}
+
+.center {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  margin-top: 3rem;
+}
+
+/* Адаптив */
+@media (max-width: 600px) {
+  body { padding: 1.5rem 1rem; }
+  .scroll-wrapper { padding: 0.5rem 0 3rem; }
+  .scroll-body { padding: 2rem 1.5rem 2.5rem; margin: -8px 6px; }
+  .scroll-text { font-size: 1rem; line-height: 1.7; }
+  .scroll-text p { text-indent: 1.25rem; }
+  .scroll-text p:first-letter { font-size: 2rem; }
+  .wax-seal { width: 60px; height: 60px; font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1 class="page-title">📜 Як усе починалось</h1>
+  <p class="page-subtitle">Ось оригінальний запит Артема — справжній діалог, який поклав початок цьому сайту</p>
+</header>
+
+<div class="scroll-wrapper">
+  <!-- Верхній валик -->
+  <div class="scroll-roll">
+    <span class="scroll-roll-cap left"></span>
+    <span class="scroll-roll-cap right"></span>
+  </div>
+
+  <!-- Тіло сувою -->
+  <div class="scroll-body">
+    <h2 class="scroll-title">Першочерговий задум</h2>
+    <div class="scroll-divider">❦ ✦ ❦</div>
+    <p class="scroll-date">Записано з пам'яті · 2026 рік</p>
+
+    <div class="scroll-text">
+      <p>Спочатку було просте дитяче питання — а чи існує насправді той загадковий Бермудський трикутник? Так розпочалась наша спільна пригода.</p>
+
+      <div class="dialog">
+        <p>«<strong>Чи існує Бермурський трикутник?</strong>» — спитав <strong>Артем</strong>, чиє ім'я тоді ще не було згадане.</p>
+      </div>
+
+      <p>Далі юний дослідник представився і поділився задумом: він хотів збудувати сайт. Не просто будь-який — справжній сайт, як ті, що бувають у дорослих в інтернеті. Сайт про Бермудський трикутник.</p>
+
+      <p>Артем чітко окреслив, чого хоче бачити на цьому сайті:</p>
+
+      <div class="dialog">
+        <p>«<em>Я хочу бачити, де він розташований. Я хочу знати історію про нього. Я хочу знати, чому він сам називається Бермудський трикутник. Я хочу дізнатися, які кораблі і літаки там зникли.</em>»</p>
+      </div>
+
+      <p>На питання, для кого цей сайт, відповідь була такою ж рішучою: <strong>для дітей</strong>, щоб було зрозуміло. Не для дорослих, не для академіків — для таких самих допитливих хлопчаків і дівчаток, як він сам.</p>
+
+      <p>А коли спитали, яким має бути сайт, Артем сказав найголовніше:</p>
+
+      <div class="dialog">
+        <p>«<em>Щоб він був такий, як справжні сайти. І з картою.</em>»</p>
+      </div>
+
+      <p>Ось так, з простих, але точних побажань, і народився цей маленький освітній додаток. Карта на місці, історії розказано, теорії перелічено. Артем досліджує світ — а світ відповідає тим, що відкривається перед ним.</p>
+
+      <div class="scroll-signature">
+        ~ Артем та Роман
+        <span class="scroll-signature-sub">досліджують світ</span>
+      </div>
+      <div style="clear: both;"></div>
+    </div>
+
+    <!-- Воскова печатка -->
+    <div class="wax-seal">🔺</div>
+  </div>
+
+  <!-- Нижній валик -->
+  <div class="scroll-roll bottom">
+    <span class="scroll-roll-cap left"></span>
+    <span class="scroll-roll-cap right"></span>
+  </div>
+</div>
+
+<div class="center">
+  <a href="bermuda-design-preview.html" class="back-link">
+    ← Повернутись до пригоди
+  </a>
+</div>
+
+</body>
+</html>
