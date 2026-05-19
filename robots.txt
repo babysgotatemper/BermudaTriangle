@@ -9,7 +9,7 @@ Crawl-delay: 1
 Request-rate: 30/60
 
 # Specify sitemap
-Sitemap: https://bermudatriangle.vercel.app/sitemap.xml
+Sitemap: https://bermuda-triangle-one.vercel.app/sitemap.xml
 
 # Google-specific directives
 User-agent: Googlebot
