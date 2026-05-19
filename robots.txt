@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+Disallow: /private/
+
+# Specify crawl delay (optional)
+Crawl-delay: 1
+
+# Specify request rate (optional)
+Request-rate: 30/60
+
+# Specify sitemap
+Sitemap: https://bermudatriangle.vercel.app/sitemap.xml
+
+# Google-specific directives
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing-specific directives
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1

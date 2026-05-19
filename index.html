@@ -3,10 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔺 Бермудський трикутник · Design Preview</title>
+<meta name="description" content="Дізнайтеся про найзагадковіше місце на Землі — Бермудський трикутник. Історія, карта, кораблі та літаки, які там зникли, теорії та реальні факти для дітей.">
+<meta name="keywords" content="Бермудський трикутник, загадка, Атлантичний океан, для дітей, інтерактивна карта, науково-популярне">
+<meta name="author" content="Артем та Роман">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Бермудський трикутник">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bermudatriangle.vercel.app/">
+<meta property="og:title" content="🔺 Бермудський трикутник — Інтерактивна подорож у загадку">
+<meta property="og:description" content="Дізнайтеся про найзагадковіше місце на Землі. Карта, історія, науково-популярні факти та теорії для дітей.">
+<meta property="og:image" content="https://bermudatriangle.vercel.app/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="uk_UA">
+<meta property="og:site_name" content="Бермудський трикутник">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://bermudatriangle.vercel.app/">
+<meta property="twitter:title" content="🔺 Бермудський трикутник — Інтерактивна подорож">
+<meta property="twitter:description" content="Загадка Бермудського трикутника розкривається через карту, теорії та реальні факти.">
+<meta property="twitter:image" content="https://bermudatriangle.vercel.app/og-image.png">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="https://bermudatriangle.vercel.app/">
+
+<!-- Preconnect для шрифтів -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>🔺</text></svg>">
+<link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75'>🔺</text></svg>">
+
+<title>🔺 Бермудський трикутник — Інтерактивна подорож у загадку | Освіта для дітей</title>
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalWebsiteExample",
+  "name": "Бермудський трикутник — Інтерактивна подорож",
+  "description": "Інтерактивний освітній сайт про Бермудський трикутник для дітей. Включає карту, історію, теорії та факти про загадкові зникнення кораблів та літаків.",
+  "url": "https://bermudatriangle.vercel.app/",
+  "author": {
+    "@type": "Person",
+    "name": "Артем та Роман"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Артем та Роман",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://bermudatriangle.vercel.app/og-image.png"
+    }
+  },
+  "image": "https://bermudatriangle.vercel.app/og-image.svg",
+  "inLanguage": "uk",
+  "isAccessibleForFree": true,
+  "educationalLevel": "Elementary School to Middle School",
+  "audience": {
+    "@type": "EducationalAudience",
+    "educationalRole": "Student"
+  },
+  "keywords": "Бермудський трикутник, загадка, Атлантичний океан, навчання для дітей"
+}
+</script>
+
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -1088,10 +1156,10 @@ body.popup-open {
 </nav>
 
 <!-- ===== HERO ===== -->
-<section class="section hero" id="hero">
-  <span class="section-label">01 · HERO</span>
-  <div class="stars"></div>
-  <svg class="triangle" viewBox="0 0 100 100">
+<section class="section hero" id="hero" aria-label="Головна сторінка про Бермудський трикутник">
+  <span class="section-label" aria-hidden="true">01 · HERO</span>
+  <div class="stars" aria-hidden="true"></div>
+  <svg class="triangle" viewBox="0 0 100 100" aria-label="Логотип Бермудського трикутника" role="img">
     <polygon points="50,10 90,85 10,85" fill="rgba(20,184,166,0.08)"
              stroke="#14b8a6" stroke-width="2.5"
              stroke-dasharray="4 3" stroke-linejoin="round"/>
@@ -1099,16 +1167,16 @@ body.popup-open {
       <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
     </circle>
   </svg>
-  <h1>Бермудський<br>трикутник</h1>
-  <p><span class="user-name-inline" data-name></span>, найзагадковіше місце на Землі, де зникають кораблі та літаки!</p>
-  <div class="scroll-hint">↓</div>
+  <h1>Бермудський трикутник — найзагадковіше місце на Землі</h1>
+  <p><span class="user-name-inline" data-name></span>, це місце, де на мистеріозних обставинах зникають кораблі та літаки!</p>
+  <div class="scroll-hint" aria-label="Прокрутити вниз">↓</div>
 </section>
 
 <!-- ===== WHAT IS IT ===== -->
-<section class="section what" id="what">
-  <span class="section-label">02 · ЩО ЦЕ ТАКЕ</span>
-  <div class="question-block" data-question>
-    <h2 class="title"><span class="emoji">🌊</span><span class="user-name" data-name></span>, а ти знаєш, що таке Бермудський трикутник?</h2>
+<section class="section what" id="what" aria-labelledby="what-title">
+  <span class="section-label" aria-hidden="true">02 · ЩО ЦЕ ТАКЕ</span>
+  <article class="question-block" data-question>
+    <h2 id="what-title" class="title"><span class="emoji" aria-hidden="true">🌊</span>Що таке Бермудський трикутник?</h2>
     <div class="yn-buttons">
       <button class="yn-btn yn-btn-no" data-answer="no">👀 Розкажи мені!</button>
     </div>
@@ -1122,14 +1190,14 @@ body.popup-open {
         </div>
       </article>
     </div>
-  </div>
+  </article>
 </section>
 
 <!-- ===== LOCATION ===== -->
-<section class="section location" id="location">
-  <span class="section-label">03 · ЛОКАЦІЯ</span>
-  <div class="question-block" data-question>
-    <h2 class="title"><span class="emoji">🗺️</span><span class="user-name" data-name></span>, а ти знаєш, де знаходиться Бермудський трикутник?</h2>
+<section class="section location" id="location" aria-labelledby="location-title">
+  <span class="section-label" aria-hidden="true">03 · ЛОКАЦІЯ</span>
+  <article class="question-block" data-question>
+    <h2 id="location-title" class="title"><span class="emoji" aria-hidden="true">🗺️</span>Де розташований Бермудський трикутник?</h2>
     <div class="yn-buttons">
       <button class="yn-btn yn-btn-no" data-answer="no">👀 Розкажи мені!</button>
     </div>
@@ -1194,14 +1262,14 @@ body.popup-open {
         </div>
       </div>
     </div>
-  </div>
+  </article>
 </section>
 
 <!-- ===== NAME ORIGIN ===== -->
-<section class="section name" id="name">
-  <span class="section-label">04 · НАЗВА</span>
-  <div class="question-block" data-question>
-    <h2 class="title"><span class="emoji">📚</span><span class="user-name" data-name></span>, а ти знаєш, чому така дивна назва — «Бермудський трикутник»?</h2>
+<section class="section name" id="name" aria-labelledby="name-title">
+  <span class="section-label" aria-hidden="true">04 · НАЗВА</span>
+  <article class="question-block" data-question>
+    <h2 id="name-title" class="title"><span class="emoji" aria-hidden="true">📚</span>Чому він називається Бермудський трикутник?</h2>
     <div class="yn-buttons">
       <button class="yn-btn yn-btn-no" data-answer="no">👀 Розкажи мені!</button>
     </div>
@@ -1220,14 +1288,14 @@ body.popup-open {
         </div>
       </div>
     </div>
-  </div>
+  </article>
 </section>
 
 <!-- ===== DISAPPEARED — FLIP CARDS ===== -->
-<section class="section disappeared" id="disappeared">
-  <span class="section-label">05 · ЗНИКЛИ</span>
-  <div class="question-block" data-question>
-    <h2 class="title"><span class="emoji">👻</span><span class="user-name" data-name></span>, а ти знаєш, хто зникав у Бермудському трикутнику?</h2>
+<section class="section disappeared" id="disappeared" aria-labelledby="disappeared-title">
+  <span class="section-label" aria-hidden="true">05 · ЗНИКЛИ</span>
+  <article class="question-block" data-question>
+    <h2 id="disappeared-title" class="title"><span class="emoji" aria-hidden="true">👻</span>Які кораблі та літаки зникли в Бермудському трикутнику?</h2>
     <div class="yn-buttons">
       <button class="yn-btn yn-btn-no" data-answer="no">👀 Розкажи мені!</button>
     </div>
@@ -1315,14 +1383,14 @@ body.popup-open {
 
       </div>
     </div>
-  </div>
+  </article>
 </section>
 
 <!-- ===== THEORIES ===== -->
-<section class="section theories" id="theories">
-  <span class="section-label">06 · ТЕОРІЇ</span>
-  <div class="question-block" data-question>
-    <h2 class="title"><span class="emoji">🤔</span><span class="user-name" data-name></span>, а ти знаєш, чому в Бермудському трикутнику зникають кораблі?</h2>
+<section class="section theories" id="theories" aria-labelledby="theories-title">
+  <span class="section-label" aria-hidden="true">06 · ТЕОРІЇ</span>
+  <article class="question-block" data-question>
+    <h2 id="theories-title" class="title"><span class="emoji" aria-hidden="true">🤔</span>Чому в Бермудському трикутнику зникають кораблі?</h2>
     <div class="yn-buttons">
       <button class="yn-btn yn-btn-no" data-answer="no">👀 Розкажи мені!</button>
     </div>
@@ -1348,14 +1416,14 @@ body.popup-open {
         </div>
       </div>
     </div>
-  </div>
+  </article>
 </section>
 
 <!-- ===== REALITY ===== -->
-<section class="section reality" id="reality">
-  <span class="section-label">07 · ПРАВДА</span>
-  <div class="question-block" data-question>
-    <h2 class="title"><span class="emoji">🔬</span><span class="user-name" data-name></span>, а ти знаєш, що думають вчені насправді?</h2>
+<section class="section reality" id="reality" aria-labelledby="reality-title">
+  <span class="section-label" aria-hidden="true">07 · ПРАВДА</span>
+  <article class="question-block" data-question>
+    <h2 id="reality-title" class="title"><span class="emoji" aria-hidden="true">🔬</span>Що думають вчені про Бермудський трикутник?</h2>
     <div class="yn-buttons">
       <button class="yn-btn yn-btn-no" data-answer="no">👀 Розкажи мені!</button>
     </div>
@@ -1373,11 +1441,11 @@ body.popup-open {
         </div>
       </article>
     </div>
-  </div>
+  </article>
 </section>
 
 <!-- ===== FOOTER ===== -->
-<footer class="section footer">
+<footer class="section footer" role="contentinfo">
   <div class="footer-emojis">🔺 🌊 ⛵ ✈️ 🏝️</div>
   <div class="footer-text">Артем та Роман досліджують світ</div>
   <a href="origin.html" class="footer-origin-link">📜 Як усе починалось</a>
