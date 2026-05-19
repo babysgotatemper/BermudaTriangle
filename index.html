@@ -1177,7 +1177,7 @@ body.popup-open {
 <section class="section what" id="what" aria-labelledby="what-title">
   <span class="section-label" aria-hidden="true">02 · ЩО ЦЕ ТАКЕ</span>
   <article class="question-block" data-question>
-    <h2 id="what-title" class="title"><span class="emoji" aria-hidden="true">🌊</span>А ти знаєш? Що таке Бермудський трикутник?</h2>
+    <h2 id="what-title" class="title" data-question-title="А ти знаєш? Що таке Бермудський трикутник?"><span class="emoji" aria-hidden="true">🌊</span><span class="user-name" data-name></span>, а ти знаєш? Що таке Бермудський трикутник?</h2>
     <div class="yn-buttons">
       <button class="yn-btn yn-btn-no" data-answer="no">👀 Розкажи мені!</button>
     </div>
@@ -1198,7 +1198,7 @@ body.popup-open {
 <section class="section location" id="location" aria-labelledby="location-title">
   <span class="section-label" aria-hidden="true">03 · ЛОКАЦІЯ</span>
   <article class="question-block" data-question>
-    <h2 id="location-title" class="title"><span class="emoji" aria-hidden="true">🗺️</span>А ти знаєш? Де розташований Бермудський трикутник?</h2>
+    <h2 id="location-title" class="title" data-question-title="А ти знаєш? Де розташований Бермудський трикутник?"><span class="emoji" aria-hidden="true">🗺️</span><span class="user-name" data-name></span>, а ти знаєш? Де розташований Бермудський трикутник?</h2>
     <div class="yn-buttons">
       <button class="yn-btn yn-btn-no" data-answer="no">👀 Розкажи мені!</button>
     </div>
@@ -1270,7 +1270,7 @@ body.popup-open {
 <section class="section name" id="name" aria-labelledby="name-title">
   <span class="section-label" aria-hidden="true">04 · НАЗВА</span>
   <article class="question-block" data-question>
-    <h2 id="name-title" class="title"><span class="emoji" aria-hidden="true">📚</span>А ти знаєш? Чому він називається Бермудський трикутник?</h2>
+    <h2 id="name-title" class="title" data-question-title="А ти знаєш? Чому він називається Бермудський трикутник?"><span class="emoji" aria-hidden="true">📚</span><span class="user-name" data-name></span>, а ти знаєш? Чому він називається Бермудський трикутник?</h2>
     <div class="yn-buttons">
       <button class="yn-btn yn-btn-no" data-answer="no">👀 Розкажи мені!</button>
     </div>
@@ -1296,7 +1296,7 @@ body.popup-open {
 <section class="section disappeared" id="disappeared" aria-labelledby="disappeared-title">
   <span class="section-label" aria-hidden="true">05 · ЗНИКЛИ</span>
   <article class="question-block" data-question>
-    <h2 id="disappeared-title" class="title"><span class="emoji" aria-hidden="true">👻</span>А ти знаєш? Які кораблі та літаки зникли в Бермудському трикутнику?</h2>
+    <h2 id="disappeared-title" class="title" data-question-title="А ти знаєш? Які кораблі та літаки зникли в Бермудському трикутнику?"><span class="emoji" aria-hidden="true">👻</span><span class="user-name" data-name></span>, а ти знаєш? Які кораблі та літаки зникли в Бермудському трикутнику?</h2>
     <div class="yn-buttons">
       <button class="yn-btn yn-btn-no" data-answer="no">👀 Розкажи мені!</button>
     </div>
@@ -1391,7 +1391,7 @@ body.popup-open {
 <section class="section theories" id="theories" aria-labelledby="theories-title">
   <span class="section-label" aria-hidden="true">06 · ТЕОРІЇ</span>
   <article class="question-block" data-question>
-    <h2 id="theories-title" class="title"><span class="emoji" aria-hidden="true">🤔</span>А ти знаєш? Чому в Бермудському трикутнику зникають кораблі?</h2>
+    <h2 id="theories-title" class="title" data-question-title="А ти знаєш? Чому в Бермудському трикутнику зникають кораблі?"><span class="emoji" aria-hidden="true">🤔</span><span class="user-name" data-name></span>, а ти знаєш? Чому в Бермудському трикутнику зникають кораблі?</h2>
     <div class="yn-buttons">
       <button class="yn-btn yn-btn-no" data-answer="no">👀 Розкажи мені!</button>
     </div>
@@ -1424,7 +1424,7 @@ body.popup-open {
 <section class="section reality" id="reality" aria-labelledby="reality-title">
   <span class="section-label" aria-hidden="true">07 · ПРАВДА</span>
   <article class="question-block" data-question>
-    <h2 id="reality-title" class="title"><span class="emoji" aria-hidden="true">🔬</span>А ти знаєш? Що думають вчені про Бермудський трикутник?</h2>
+    <h2 id="reality-title" class="title" data-question-title="А ти знаєш? Що думають вчені про Бермудський трикутник?"><span class="emoji" aria-hidden="true">🔬</span><span class="user-name" data-name></span>, а ти знаєш? Що думають вчені про Бермудський трикутник?</h2>
     <div class="yn-buttons">
       <button class="yn-btn yn-btn-no" data-answer="no">👀 Розкажи мені!</button>
     </div>
@@ -1460,8 +1460,8 @@ const nameInput = document.getElementById('nameInput');
 const nameSubmit = document.getElementById('nameSubmit');
 let userName = '';
 
-// Блокуємо скрол доки popup відкритий
-document.body.classList.add('popup-open');
+// Перевіряємо чи є збережене ім'я у localStorage
+const savedName = localStorage.getItem('userName');
 
 function applyUserName(name) {
   userName = name.trim() || 'друже';
@@ -1480,6 +1480,8 @@ function closePopup() {
     return;
   }
   applyUserName(name);
+  // Зберігаємо ім'я у localStorage
+  localStorage.setItem('userName', name);
 
   popup.classList.add('is-closing');
   setTimeout(() => {
@@ -1488,12 +1490,24 @@ function closePopup() {
   }, 400);
 }
 
-nameSubmit.addEventListener('click', closePopup);
-nameInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') closePopup();
-});
-// Перший фокус
-setTimeout(() => nameInput.focus(), 600);
+// Якщо ім'я вже збережене — застосовуємо його і закриваємо popup
+if (savedName) {
+  applyUserName(savedName);
+  popup.classList.add('is-closing');
+  setTimeout(() => {
+    popup.style.display = 'none';
+    document.body.classList.remove('popup-open');
+  }, 400);
+} else {
+  // Иакщо ні — показуємо popup
+  document.body.classList.add('popup-open');
+  nameSubmit.addEventListener('click', closePopup);
+  nameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') closePopup();
+  });
+  // Перший фокус
+  setTimeout(() => nameInput.focus(), 600);
+}
 
 // ===== FLIP CARDS =====
 document.querySelectorAll('.flip').forEach(card => {
